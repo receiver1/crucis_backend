@@ -36,8 +36,10 @@ class PostController extends Controller
         if ($post->user_id != auth()->user()->id)
             throw new AccessDeniedHttpException('Недостаточно прав');
 
-        Post::update($data, $post->id);
-        return response('', 200);
+        Post::where('id', $post->id)
+            ->update($data);
+
+        return response('', 204);
     }
 
     public function remove(Request $request, Post $post)

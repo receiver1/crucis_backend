@@ -24,33 +24,33 @@ Route::group(['prefix' => '/v1'], function () {
     Route::post('/register', [LoginController::class, 'register']);
     Route::delete('/logout', [LoginController::class, 'logout']);
 
-    Route::group(['prefix' => '/profile'], function () {
+    Route::group(['prefix' => '/profile', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [ProfileController::class, 'index']);
         Route::put('/', [ProfileController::class, 'update']);
         Route::delete('/', [ProfileController::class, 'remove']);
-    })->middleware('auth:sanctum');
+    });
 
-    Route::group(['prefix' => '/users'], function () {
+    Route::group(['prefix' => '/users', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [UserController::class, 'list']);
-        Route::get('/{id}', [UserController::class, 'index']);
-    })->middleware('auth:sanctum');
+        Route::get('/{user}', [UserController::class, 'index']);
+    });
 
-    Route::group(['prefix' => '/posts'], function () {
+    Route::group(['prefix' => '/posts', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [PostController::class, 'list']);
-        Route::get('/{id}', [PostController::class, 'index']);
+        Route::get('/{post}', [PostController::class, 'index']);
         Route::post('/=', [PostController::class, 'create']);
-        Route::put('/{id}', [PostController::class, 'update']);
-        Route::delete('/{id}', [PostController::class, 'remove']);
-    })->middleware('auth:sanctum');
+        Route::put('/{post}', [PostController::class, 'update']);
+        Route::delete('/{post}', [PostController::class, 'remove']);
+    });
 
-    Route::group(['prefix' => '/comments'], function () {
+    Route::group(['prefix' => '/comments', 'middleware' => 'auth:sanctum'], function () {
         // /comments/?post_id=5 // получает все комментарии к посту
         Route::get('/', [CommentController::class, 'list']);
-        Route::get('/{id}', [CommentController::class, 'index']);
+        Route::get('/{comment}', [CommentController::class, 'index']);
         Route::post('/', [CommentController::class, 'create']);
-        Route::put('/{id}', [CommentController::class, 'update']);
-        Route::delete('/{id}', [CommentController::class, 'remove']);
-    })->middleware('auth:sanctum');
+        Route::put('/{comment}', [CommentController::class, 'update']);
+        Route::delete('/{comment}', [CommentController::class, 'remove']);
+    });
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
