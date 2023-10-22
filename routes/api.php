@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => '/v1'], function () {
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/register', [LoginController::class, 'register']);
-    Route::delete('/logout', [LoginController::class, 'logout']);
+    Route::post('/login', [AuthenticateController::class, 'login']);
+    Route::post('/register', [AuthenticateController::class, 'register']);
+    Route::delete('/logout', [AuthenticateController::class, 'logout']);
 
     Route::group(['prefix' => '/profile', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/', [ProfileController::class, 'index']);

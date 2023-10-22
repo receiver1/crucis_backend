@@ -6,10 +6,7 @@ use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
 
-/**
- * @group Authentication
- */
-class LoginController extends Controller
+class AuthenticateController extends Controller
 {
     /**
      */
