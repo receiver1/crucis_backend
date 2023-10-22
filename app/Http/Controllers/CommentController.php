@@ -19,7 +19,7 @@ class CommentController extends Controller
         ]);
 
         return CommentResource::collection(
-            Comment::paginate(array_key_exists('count', $data) ? $data['count'] : 12)
+            Comment::simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
         );
     }
 

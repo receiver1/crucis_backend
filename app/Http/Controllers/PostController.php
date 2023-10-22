@@ -20,7 +20,7 @@ class PostController extends Controller
         ]);
 
         return PostResource::collection(
-            Post::paginate(array_key_exists('count', $data) ? $data['count'] : 12)
+            Post::simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
         );
     }
 
