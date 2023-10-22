@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class AuthenticateController extends Controller
 {
     /**
+     * @unauthenticated
      */
     public function login(Request $request)
     {
@@ -27,6 +28,7 @@ class AuthenticateController extends Controller
     }
 
     /**
+     * @unauthenticated
      */
     public function register(Request $request)
     {
