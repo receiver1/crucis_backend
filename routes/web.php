@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api.json', function (Dedoc\Scramble\Generator $generator) {
+    return $generator();
+})->name('scramble.docs.index');
+
+Route::view('/api', 'scramble::docs')->name('scramble.docs.api');
