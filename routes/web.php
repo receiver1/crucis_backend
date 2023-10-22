@@ -19,6 +19,6 @@ Route::get('/', function () {
 
 Route::get('/api.json', function (Dedoc\Scramble\Generator $generator) {
     return $generator();
-})->name('scramble.docs.index');
+});
 
-Route::view('/api', 'scramble::docs')->name('scramble.docs.api');
+Route::view('/api', 'scramble::docs');
