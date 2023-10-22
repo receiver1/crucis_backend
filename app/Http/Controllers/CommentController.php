@@ -9,9 +9,18 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CommentController extends Controller
 {
+    /**
+     * @response array{"data": array{CommentResource}, "links": array{"first": "http://127.0.0.1:8000/api/v1/posts?page=1", "last": "http://127.0.0.1:8000/api/v1/posts?page=1", "prev": null, "next": null}}
+     */
     public function list(Request $request)
     {
-        return CommentResource::collection(Comment::all());
+        $data = $request->validate([
+            'count' => 'integer|gte:0|lte:100'
+        ]);
+
+        return CommentResource::collection(
+            Comment::paginate(array_key_exists('count', $data) ? $data['count'] : 12)
+        );
     }
 
     public function index(Request $request, Comment $comment)

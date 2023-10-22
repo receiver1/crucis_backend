@@ -5,13 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PostController extends Controller
 {
+    /**
+     * @response array{"data": array{PostResource}, "links": array{"first": "http://127.0.0.1:8000/api/v1/posts?page=1", "last": "http://127.0.0.1:8000/api/v1/posts?page=1", "prev": null, "next": null}}
+     */
     public function list(Request $request)
     {
-        return PostResource::collection(Post::all());
+        $data = $request->validate([
+            'count' => 'integer|gte:0|lte:100'
+        ]);
+
+        return PostResource::collection(
+            Post::paginate(array_key_exists('count', $data) ? $data['count'] : 12)
+        );
     }
 
     public function index(Request $request, Post $post)
