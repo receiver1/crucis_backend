@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -10,7 +11,7 @@ class ProfileController extends Controller
 {
     public function index(Request $request)
     {
-        return auth()->user();
+        return new UserResource(auth()->user());
     }
 
     public function update(Request $request, User $user)

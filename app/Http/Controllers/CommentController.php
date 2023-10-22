@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -10,12 +11,12 @@ class CommentController extends Controller
 {
     public function list(Request $request)
     {
-        return Comment::all();
+        return CommentResource::collection(Comment::all());
     }
 
     public function index(Request $request, Comment $comment)
     {
-        return $comment;
+        return new CommentResource($comment);
     }
 
     public function create(Request $request)
@@ -25,7 +26,8 @@ class CommentController extends Controller
             'text' => 'required|string',
         ]);
 
-        return Comment::create($data);
+        $data['user_id'] = auth()->user()->id;
+        return new CommentResource(Comment::create($data));
     }
 
     public function update(Request $request, Comment $comment)

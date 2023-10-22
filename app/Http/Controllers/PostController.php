@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -10,12 +11,12 @@ class PostController extends Controller
 {
     public function list(Request $request)
     {
-        return Post::all();
+        return PostResource::collection(Post::all());
     }
 
     public function index(Request $request, Post $post)
     {
-        return $post;
+        return new PostResource($post);
     }
 
     public function create(Request $request)
@@ -24,7 +25,8 @@ class PostController extends Controller
             'text' => 'required|string',
         ]);
 
-        return Post::create($data);
+        $data['user_id'] = auth()->user()->id;
+        return new PostResource(Post::create($data));
     }
 
     public function update(Request $request, Post $post)
