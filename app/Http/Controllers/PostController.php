@@ -19,8 +19,11 @@ class PostController extends Controller
             'count' => 'integer|gte:0|lte:100'
         ]);
 
+        $posts = Post::query();
+        $posts->orderBy('created_at');
+
         return PostResource::collection(
-            Post::simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
+            $posts->simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
         );
     }
 
