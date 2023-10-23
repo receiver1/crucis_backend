@@ -5,7 +5,6 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,14 +18,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware(config('scramble.middleware', [RestrictedDocsAccess::class]))->group(function () {
-    Route::get('/openapi.json', function (Dedoc\Scramble\Generator $generator) {
-        return $generator();
-    });
-
-    Route::view('/', 'scramble::docs');
-});
 
 Route::group(['prefix' => '/v1'], function () {
     Route::post('/login', [AuthenticateController::class, 'login']);
