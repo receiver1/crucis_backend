@@ -14,10 +14,14 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $user = auth()->user();
+
         return [
             'id' => $this->id,
             'user' => new UserResource($this->user),
             'text' => $this->text,
+            'likes' => $this->likes()->count(),
+            'liked' => boolval($user != null ? $this->likes()->where('user_id', $user->id)->count() : false),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

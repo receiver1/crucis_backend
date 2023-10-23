@@ -39,7 +39,8 @@ Route::group(['prefix' => '/v1'], function () {
     Route::get('/posts/', [PostController::class, 'list']);
     Route::group(['prefix' => '/posts', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/{post}', [PostController::class, 'index']);
-        Route::get('/{post}/like', [PostController::class, 'like']);
+        Route::post('/{post}/like', [PostController::class, 'like']);
+        Route::delete('/{post}/like', [PostController::class, 'unlike']);
         Route::post('/', [PostController::class, 'create']);
         Route::put('/{post}', [PostController::class, 'update']);
         Route::delete('/{post}', [PostController::class, 'remove']);

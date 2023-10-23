@@ -6,6 +6,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class PostController extends Controller
 {
@@ -33,7 +34,20 @@ class PostController extends Controller
 
     public function like(Request $request, Post $post)
     {
+        if ($post->likes()->where('user_id', $request->user()->id)->count())
+            throw new ConflictHttpException('Вы уже поставили лайк на этот пост');
 
+        $post->likes()->attach($request->user()->id);
+        return response()->json('', 204);
+    }
+
+    public function unlike(Request $request, Post $post)
+    {
+        if (!$post->likes()->where('user_id', $request->user()->id)->count())
+            throw new ConflictHttpException('Вы не ставили лайк на этот пост');
+
+        $post->likes()->detach($request->user()->id);
+        return response()->json('', 204);
     }
 
     public function create(Request $request)
