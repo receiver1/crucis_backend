@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware(config('scramble.middleware', [RestrictedDocsAccess::class]))->group(function () {
-    Route::get('/api.json', function (Dedoc\Scramble\Generator $generator) {
+    Route::get('/openapi.json', function (Dedoc\Scramble\Generator $generator) {
         return $generator();
     });
 
-    Route::view('/api', 'scramble::docs');
+    Route::view('/', 'scramble::docs');
 });
