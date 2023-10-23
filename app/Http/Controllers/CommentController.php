@@ -53,10 +53,8 @@ class CommentController extends Controller
         if ($comment->user_id != auth()->user()->id)
             throw new AccessDeniedHttpException('Недостаточно прав');
 
-        Comment::where('id', $comment->id)
-            ->update($data);
-
-        return response('', 204);
+        $comment->update($data);
+        return new CommentResource($comment);
     }
 
     public function remove(Request $request, Comment $comment)

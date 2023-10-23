@@ -46,7 +46,6 @@ Route::group(['prefix' => '/v1'], function () {
         Route::delete('/{post}', [PostController::class, 'remove']);
     });
 
-    // /comments/?post_id=5 // получает все комментарии к посту
     Route::get('/comments/', [CommentController::class, 'list']);
     Route::group(['prefix' => '/comments', 'middleware' => 'auth:sanctum'], function () {
         Route::get('/{comment}', [CommentController::class, 'index']);
@@ -54,8 +53,4 @@ Route::group(['prefix' => '/v1'], function () {
         Route::put('/{comment}', [CommentController::class, 'update']);
         Route::delete('/{comment}', [CommentController::class, 'remove']);
     });
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
