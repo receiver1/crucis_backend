@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PostController extends Controller
@@ -30,6 +29,11 @@ class PostController extends Controller
     public function index(Request $request, Post $post)
     {
         return new PostResource($post);
+    }
+
+    public function like(Request $request, Post $post)
+    {
+
     }
 
     public function create(Request $request)

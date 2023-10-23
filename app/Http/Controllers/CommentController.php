@@ -15,11 +15,15 @@ class CommentController extends Controller
     public function list(Request $request)
     {
         $data = $request->validate([
-            'count' => 'integer|gte:0|lte:100'
+            'post_id' => 'required|integer|exists:posts,id',
+            'count' => 'integer|gte:0|lte:100',
         ]);
 
+        $comments = Comment::query();
+        $comments->where('post_id', $data['post_id']);
+
         return CommentResource::collection(
-            Comment::simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
+            $comments->simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
         );
     }
 

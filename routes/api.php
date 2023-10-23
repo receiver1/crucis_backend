@@ -36,17 +36,18 @@ Route::group(['prefix' => '/v1'], function () {
         Route::get('/{user}', [UserController::class, 'index']);
     });
 
+    Route::get('/posts/', [PostController::class, 'list']);
     Route::group(['prefix' => '/posts', 'middleware' => 'auth:sanctum'], function () {
-        Route::get('/', [PostController::class, 'list']);
         Route::get('/{post}', [PostController::class, 'index']);
-        Route::post('/=', [PostController::class, 'create']);
+        Route::get('/{post}/like', [PostController::class, 'like']);
+        Route::post('/', [PostController::class, 'create']);
         Route::put('/{post}', [PostController::class, 'update']);
         Route::delete('/{post}', [PostController::class, 'remove']);
     });
 
+    // /comments/?post_id=5 // получает все комментарии к посту
+    Route::get('/comments/', [CommentController::class, 'list']);
     Route::group(['prefix' => '/comments', 'middleware' => 'auth:sanctum'], function () {
-        // /comments/?post_id=5 // получает все комментарии к посту
-        Route::get('/', [CommentController::class, 'list']);
         Route::get('/{comment}', [CommentController::class, 'index']);
         Route::post('/', [CommentController::class, 'create']);
         Route::put('/{comment}', [CommentController::class, 'update']);
