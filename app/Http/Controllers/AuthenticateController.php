@@ -50,6 +50,6 @@ class AuthenticateController extends Controller
      */
     public function logout(Request $request)
     {
-
+        return auth()->token()->revoke();
     }
 }
