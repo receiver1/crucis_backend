@@ -50,6 +50,7 @@ class AuthenticateController extends Controller
      */
     public function logout(Request $request)
     {
-        return auth()->token()->revoke();
+        $request->user()->currentAccessToken()->delete();
+        return response()->json('', 204);
     }
 }
