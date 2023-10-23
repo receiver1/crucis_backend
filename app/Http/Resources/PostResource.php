@@ -22,6 +22,7 @@ class PostResource extends JsonResource
             'text' => $this->text,
             'likes' => $this->likes()->count(),
             'liked' => boolval($user != null ? $this->likes()->where('user_id', $user->id)->count() : false),
+            'comments' => $this->comments()->count(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
