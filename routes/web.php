@@ -1,6 +1,5 @@
 <?php
 
-use Dedoc\Scramble\Http\Middleware\RestrictedDocsAccess;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +16,3 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-Route::middleware(config('scramble.middleware', [RestrictedDocsAccess::class]))->group(function () {
-    Route::get('/openapi.json', function (Dedoc\Scramble\Generator $generator) {
-        return $generator();
-    });
-
-    Route::view('/', 'scramble::docs');
-});
