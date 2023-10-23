@@ -21,7 +21,7 @@ class CommentController extends Controller
 
         $comments = Comment::query();
         $comments->where('post_id', $data['post_id']);
-        $comments->orderBy('created_at');
+        $comments->orderBy('created_at', 'desc');
 
         return CommentResource::collection(
             $comments->simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
