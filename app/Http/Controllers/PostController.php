@@ -19,7 +19,7 @@ class PostController extends Controller
         ]);
 
         $posts = Post::query();
-        $posts->orderBy('created_at');
+        $posts->orderBy('created_at', 'desc');
 
         return PostResource::collection(
             $posts->simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)

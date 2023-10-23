@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
     {
         $users = User::factory()->count(10)->create();
         $users->each(function (User $user) {
-            $post = Post::factory()->create(["user_id" => $user->id]);
+            $post = Post::factory()->create([
+                "user_id" => $user->id,
+                'created_at' => fake()->dateTime()
+            ]);
             Comment::factory()->create([
                 "user_id" => $user->id,
                 "post_id" => $post->id
