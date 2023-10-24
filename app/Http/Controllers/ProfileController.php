@@ -14,7 +14,7 @@ class ProfileController extends Controller
         return new UserResource($request->user());
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         $data = $request->validate([
             'first_name' => 'string',
@@ -22,6 +22,7 @@ class ProfileController extends Controller
             'avatar_url' => 'string'
         ]);
 
+        $user = $request->user();
         $user->update($data);
         return new UserResource($user);
     }
