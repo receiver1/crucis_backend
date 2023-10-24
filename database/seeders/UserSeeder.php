@@ -18,5 +18,11 @@ class UserSeeder extends Seeder
             'email' => 'receiver8@yandex.ru',
             'password' => Hash::make('123abc'),
         ]);
+
+        $user = User::factory()->create([
+            'email' => 'admin@yandex.ru',
+            'password' => Hash::make('123abc'),
+            'role_id' => 2,
+        ]);
     }
 }

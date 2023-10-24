@@ -17,16 +17,20 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'user_id' => 'integer|exists:users,id',
+            'sort' => 'array|in:created_at,updated_at',
             'count' => 'integer|gte:0|lte:100'
         ]);
 
         $posts = Post::query();
         if ($request->has('user_id'))
             $posts->where('user_id', $data['user_id']);
-        $posts->orderBy('created_at', 'desc');
+
+        if ($request->has('sort'))
+            foreach ($data['sort'] as &$item)
+                $posts->orderBy($item, 'desc');
 
         return PostResource::collection(
-            $posts->simplePaginate(array_key_exists('count', $data) ? $data['count'] : 12)
+            $posts->simplePaginate($request->has('count') ? $data['count'] : 12)
         );
     }
 

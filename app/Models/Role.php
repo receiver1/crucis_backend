@@ -17,6 +17,6 @@ class Role extends Model
 
     public function abilities()
     {
-        return $this->hasMany(Ability::class);
+        return $this->belongsToMany(Ability::class, 'abilities_to_roles');
     }
 }
