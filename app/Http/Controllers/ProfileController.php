@@ -11,7 +11,7 @@ class ProfileController extends Controller
 {
     public function index(Request $request)
     {
-        return new UserResource(auth()->user());
+        return new UserResource($request->user());
     }
 
     public function update(Request $request, User $user)
@@ -22,10 +22,8 @@ class ProfileController extends Controller
             'avatar_url' => 'string'
         ]);
 
-        User::where('id', auth()->user()->id)
-            ->update($data);
-
-        return response('', 204);
+        $user->update($data);
+        return new UserResource($user);
     }
 
     public function remove(Request $request, User $user)
