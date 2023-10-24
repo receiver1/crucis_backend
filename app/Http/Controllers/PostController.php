@@ -16,10 +16,13 @@ class PostController extends Controller
     public function list(Request $request)
     {
         $data = $request->validate([
+            'user_id' => 'integer|exists:users,id',
             'count' => 'integer|gte:0|lte:100'
         ]);
 
         $posts = Post::query();
+        if ($request->has('user_id'))
+            $posts->where('user_id', $data['user_id']);
         $posts->orderBy('created_at', 'desc');
 
         return PostResource::collection(
