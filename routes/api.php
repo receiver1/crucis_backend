@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticateController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -52,5 +53,10 @@ Route::group(['prefix' => '/v1'], function () {
         Route::post('/', [CommentController::class, 'create']);
         Route::put('/{comment}', [CommentController::class, 'update']);
         Route::delete('/{comment}', [CommentController::class, 'remove']);
+    });
+
+    Route::group(['prefix' => 'media', 'middleware' => 'auth:sanctum'], function () {
+        Route::post('/', [MediaController::class, 'create']);
+        Route::delete('/', [MediaController::class, 'remove']);
     });
 });
