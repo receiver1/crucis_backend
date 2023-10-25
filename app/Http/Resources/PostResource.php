@@ -25,6 +25,7 @@ class PostResource extends JsonResource
             'comments' => $this->comments()->count(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'clipped' => (strlen($this->text) == 500),
         ];
     }
 }
