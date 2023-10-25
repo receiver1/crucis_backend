@@ -38,8 +38,8 @@ Route::group(['prefix' => '/v1'], function () {
     });
 
     Route::get('/posts/', [PostController::class, 'list']);
+    Route::get('/posts/{post}/', [PostController::class, 'index']);
     Route::group(['prefix' => '/posts', 'middleware' => 'auth:sanctum'], function () {
-        Route::get('/{post}', [PostController::class, 'index']);
         Route::post('/{post}/like', [PostController::class, 'like']);
         Route::delete('/{post}/like', [PostController::class, 'unlike']);
         Route::post('/', [PostController::class, 'create']);
@@ -48,8 +48,8 @@ Route::group(['prefix' => '/v1'], function () {
     });
 
     Route::get('/comments/', [CommentController::class, 'list']);
+    Route::get('/comments/{comment}', [CommentController::class, 'index']);
     Route::group(['prefix' => '/comments', 'middleware' => 'auth:sanctum'], function () {
-        Route::get('/{comment}', [CommentController::class, 'index']);
         Route::post('/', [CommentController::class, 'create']);
         Route::put('/{comment}', [CommentController::class, 'update']);
         Route::delete('/{comment}', [CommentController::class, 'remove']);

@@ -21,7 +21,7 @@ class PostController extends Controller
             'count' => 'integer|gte:0|lte:100'
         ]);
 
-        $posts = Post::query();
+        $posts = Post::select(\DB::raw('*, SUBSTR(text, 1, 500) as text'));
         if ($request->has('user_id'))
             $posts->where('user_id', $data['user_id']);
 

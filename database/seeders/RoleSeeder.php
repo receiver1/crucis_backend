@@ -27,6 +27,11 @@ class RoleSeeder extends Seeder
             'name' => 'Просмотр админ-панели',
             'tag' => 'admin:view',
         ]);
+        $postsRemoveAbility = Ability::create([
+            'name' => 'Удаление чужих постов',
+            'tag' => 'posts:remove',
+        ]);
         $adminRole->abilities()->attach($adminViewAbility->id);
+        $adminRole->abilities()->attach($postsRemoveAbility->id);
     }
 }
