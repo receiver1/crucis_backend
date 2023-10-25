@@ -10,7 +10,18 @@ class UserController extends Controller
 {
     public function list(Request $request)
     {
-        return UserResource::collection(User::all());
+        $data = $request->validate([
+            'name' => 'string|max:100',
+        ]);
+
+        $users = User::query();
+        if ($request->has('name'))
+            $users->where(function ($query) use ($data) {
+                $query->where('first_name', 'like', '%' . $data['name'] . '%')
+                    ->orWhere('last_name', 'like', '%' . $data['name'] . '%');
+            });
+
+        return UserResource::collection($users->get());
     }
 
     public function index(Request $request, User $user)
