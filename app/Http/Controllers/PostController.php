@@ -18,7 +18,7 @@ class PostController extends Controller
         $data = $request->validate([
             'user_id' => 'integer|exists:users,id',
             'sort' => 'array|in:created_at,updated_at,likes_count',
-            'count' => 'integer|gte:0|lte:100'
+            'count' => 'integer|gte:0|lte:100',
         ]);
 
         $posts = Post::select(\DB::raw('*, SUBSTR(text, 1, 500) as text'))
