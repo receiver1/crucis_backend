@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class UserController extends Controller
 {
@@ -32,5 +33,15 @@ class UserController extends Controller
     public function index(Request $request, User $user)
     {
         return new UserResource($user);
+    }
+
+    public function remove(Request $request, User $user)
+    {
+        $user = $request->user();
+        if (!$user->tokenCan('users:remove'))
+            throw new AccessDeniedHttpException('Недостаточно прав');
+
+        User::destroy($user->id);
+        return response('', 204);
     }
 }
