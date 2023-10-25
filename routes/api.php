@@ -32,8 +32,8 @@ Route::group(['prefix' => '/v1'], function () {
         Route::delete('/', [ProfileController::class, 'remove']);
     });
 
-    Route::group(['prefix' => '/users', 'middleware' => 'auth:sanctum'], function () {
-        Route::get('/', [UserController::class, 'list']);
+    Route::group(['prefix' => '/users'], function () {
+        Route::get('/', [UserController::class, 'list'])->middleware('auth:sanctum');
         Route::get('/{user}', [UserController::class, 'index']);
     });
 
