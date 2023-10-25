@@ -35,8 +35,13 @@ class PostController extends Controller
         );
     }
 
-    public function index(Request $request, Post $post)
+    public function index(Request $request, $id)
     {
+        $post = Post::query()
+            ->where('id', $id)
+            ->withCount('likes')
+            ->first();
+
         return new PostResource($post);
     }
 
