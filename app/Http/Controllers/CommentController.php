@@ -59,7 +59,9 @@ class CommentController extends Controller
 
     public function remove(Request $request, Comment $comment)
     {
-        if ($comment->user_id != auth()->user()->id)
+        $user = $request->user();
+
+        if ($comment->user_id != $user->id && !$user->tokenCan('comments:remove'))
             throw new AccessDeniedHttpException('Недостаточно прав');
 
         Comment::destroy($comment->id);
