@@ -17,7 +17,7 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'user_id' => 'integer|exists:users,id',
-            'sort' => 'array|in:created_at,updated_at',
+            'sort' => 'array|in:created_at,updated_at,likes',
             'count' => 'integer|gte:0|lte:100'
         ]);
 
